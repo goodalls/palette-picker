@@ -1,3 +1,40 @@
 body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+#header {
+  text-align: center;
+  height: 100px;
+}
+
+#palette-section {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 250px;
+}
+
+.palette {
+  text-align: center;
+}
+
+.color1 {
+  background-color: aqua;
+}
+.color2 {
   background-color: magenta;
 }
+.color3 {
+  background-color: maroon;
+}
+.color4 {
+  background-color: blueviolet;
+}
+.color5 {
+  background-color: burlywood;
+}
+
+
