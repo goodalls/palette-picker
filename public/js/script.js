@@ -1,15 +1,22 @@
 const coloring = event => {
-  if (event.keyCode === 32 || event.keyCode === 13) {
+  console.log(document.activeElement.tagName);
+  
+  if (document.activeElement.tagName !== 'INPUT' && event.keyCode === 32 || event.keyCode === 13 || event.target.className === 'generate' ) {
     for (let i = 1; i < 6; i++) {
-      if ($(`.color${i}`).find('span').hasClass('locked')) {
-        console.log('locked');
+      if (
+        $(`.color${i}`)
+          .find('span')
+          .hasClass('locked')
+      ) {
       } else {
         const color = getRandomColor();
         $(`.color${i}`).css('background-color', color);
-        $(`.color${i}`).find('h4').text(color);
+        $(`.color${i}`)
+          .find('h4')
+          .text(color);
       }
     }
-  } 
+  }
 };
 
 function getRandomColor() {
@@ -26,7 +33,9 @@ window.onload = () => {
   for (let i = 1; i < 6; i++) {
     const color = getRandomColor();
     $(`.color${i}`).css('background-color', color);
-    $(`.color${i}`).find('h4').text(color);
+    $(`.color${i}`)
+      .find('h4')
+      .text(color);
   }
 };
 
