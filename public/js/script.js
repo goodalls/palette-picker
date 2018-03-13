@@ -33,3 +33,5 @@ window.onload = () => {
 $('.lock').click(event => {
   $(event.target).toggleClass('locked');
 });
+
+$('.generate').click(coloring);
