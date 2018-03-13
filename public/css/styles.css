@@ -1,3 +1,57 @@
 body {
-  background-color: magenta;
+  font-family: 'Roboto', sans-serif;
 }
+
+h1 {
+  font-size: 1.5em;
+}
+
+#header {
+  text-align: center;
+  height: 100px;
+}
+
+#palette-section {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 250px;
+}
+
+.palette {
+  text-align: center;
+}
+.color1 {
+
+}
+.color2 {
+
+}
+.color3 {
+
+}
+.color4 {
+
+}
+.color5 {
+
+}
+
+.locked {
+  color: red;
+}
+
+#control-palette {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 10px auto;
+}
+
+#control-project {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 10px auto;
+}
+
+

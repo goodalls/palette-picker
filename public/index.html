@@ -6,12 +6,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Pallette Picker</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
   <link rel="stylesheet" href="./css/reset.css" type="text/css">
   <link rel="stylesheet" href="./css/styles.css" type="text/css">
 </head>
 
 <body>
+  <header id='header'>
+    <h1>Pallette Picker</h1>
+  </header>
+
+  <section id='palette-section'>
+    <article class="palette color1">
+      <span class="lock">&#128274;</span>
+      <h4 class="color">######</h4>
+    </article>
+    <article class="palette color2">
+      <span class="lock">&#128274;</span>
+      <h4 class="color">######</h4>
+    </article>
+    <article class="palette color3">
+      <span class="lock">&#128274;</span>
+      <h4 class="color">######</h4>
+    </article>
+    <article class="palette color4">
+      <span class="lock">&#128274;</span>
+      <h4 class="color">######</h4>
+    </article>
+    <article class="palette color5">
+      <span class="lock">&#128274;</span>
+      <h4 class="color">######</h4>
+    </article>
+  </section>
   
+  <section id="control-palette">
+    <button>Generate New Pallette</button>
+    <select class="drop-down">
+      <option>Pallette1</option>
+      <option>Pallette2</option>
+      <option>Pallette3</option>
+      <option>Pallette4</option>
+    </select>
+    <input type="text" placeholder="Palette Name"></input>
+    <button>Save New Pallette</button>
+  </section>
+
+  <hr>
+
+  <section id="control-project">
+    <button>Generate New Project</button>
+    <select class="drop-down">
+      <option>Pallette1</option>
+      <option>Pallette2</option>
+      <option>Pallette3</option>
+      <option>Pallette4</option>
+    </select>
+    <input type="text" placeholder="New Project Name"></input>
+    <button>Save New Project</button>
+  </section>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="./jquery/jquery.min.js"><\/script>')</script>
   <script src="./js/script.js"></script>
