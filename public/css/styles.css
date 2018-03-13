@@ -20,20 +20,38 @@ h1 {
 .palette {
   text-align: center;
 }
-/* .color1 {
-  background-color: aqua;
+.color1 {
+
 }
 .color2 {
-  background-color: magenta;
+
 }
 .color3 {
-  background-color: maroon;
+
 }
 .color4 {
-  background-color: blueviolet;
+
 }
 .color5 {
-  background-color: burlywood;
-} */
+
+}
+
+.locked {
+  color: red;
+}
+
+#control-palette {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 10px auto;
+}
+
+#control-project {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 10px auto;
+}
 
 
