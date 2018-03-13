@@ -36,8 +36,28 @@ h1 {
 
 }
 
-.locked {
+.lock {
+  background-image: url(../assets/lock-open.svg);
+  height: 24px;
+  width: 28px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  /* background-color: rgba(0, 0,0, .2); */
+}
+
+.lock:active {
   color: red;
+}
+
+.locked {
+  background-image: url('../assets/lock.svg');
+  height: 24px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  /* background-color: rgba(0, 0,0, .2); */
 }
 
 #control-palette {
