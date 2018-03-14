@@ -18,55 +18,56 @@
 
   <section id='palette-section'>
     <article class="palette color1">
-      <span class="lock">&#128274;</span>
+      <span class="lock"></span>
       <h4 class="color">######</h4>
     </article>
     <article class="palette color2">
-      <span class="lock">&#128274;</span>
+      <span class="lock"></span>
       <h4 class="color">######</h4>
     </article>
     <article class="palette color3">
-      <span class="lock">&#128274;</span>
+      <span class="lock"></span>
       <h4 class="color">######</h4>
     </article>
     <article class="palette color4">
-      <span class="lock">&#128274;</span>
+      <span class="lock"></span>
       <h4 class="color">######</h4>
     </article>
     <article class="palette color5">
-      <span class="lock">&#128274;</span>
+      <span class="lock"></span>
       <h4 class="color">######</h4>
     </article>
   </section>
-  
+
   <section id="control-palette">
-    <button>Generate New Pallette</button>
-    <select class="drop-down">
+    <button class="generate">Generate New Pallette</button>
+    <!-- <select class="drop-down">
       <option>Pallette1</option>
       <option>Pallette2</option>
       <option>Pallette3</option>
       <option>Pallette4</option>
-    </select>
-    <input type="text" placeholder="Palette Name"></input>
-    <button>Save New Pallette</button>
+    </select> -->
+    <input class="palette-name" type="text" placeholder="Palette Name"></input>
+    <button class="save-palette">Save New Palette</button>
+    <article id='saved-palettes'></article>
   </section>
 
   <hr>
 
   <section id="control-project">
-    <button>Generate New Project</button>
-    <select class="drop-down">
+    <!-- <select class="drop-down">
       <option>Pallette1</option>
       <option>Pallette2</option>
       <option>Pallette3</option>
       <option>Pallette4</option>
-    </select>
+    </select> -->
     <input type="text" placeholder="New Project Name"></input>
     <button>Save New Project</button>
+    <article id='saved-projects'></article>
   </section>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="./jquery/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="../node_modules/jquery/dist/jquery.min.js"><\/script>')</script>
   <script src="./js/script.js"></script>
 </body>
 
