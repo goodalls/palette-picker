@@ -27,8 +27,24 @@ app.get('/api/v1/palettes', (request, response) => {
 app.post('/api/v1/palettes', (request, response) => {
   const id = Date.now();
   const { palettes, name } = request.body;
-  app.locals.palettes.unshift({ id, palettes, name });
-  response.status(201).json({ id, palettes, name });
+  app.locals.palettes.unshift({ 
+    id, 
+    name, 
+    color1:palettes[0],
+    color2:palettes[1],
+    color3:palettes[2],
+    color4:palettes[3],
+    color5:palettes[4]
+  });
+  response.status(201).json({ 
+    id, 
+    name, 
+    color1:palettes[0],
+    color2:palettes[1],
+    color3:palettes[2],
+    color4:palettes[3],
+    color5:palettes[4]
+  });
 });
 
 app.locals.palettes = [];
