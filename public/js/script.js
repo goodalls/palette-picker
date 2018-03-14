@@ -32,13 +32,13 @@ function getRandomColor() {
   );
 }
 
-const savePalette = async() => {
+const savePalette = () => {
   const palette = $('.color');
   const name = $('.palette-name').val();
   const colors = Object.keys(palette)
     .map(color => palette[color].textContent)
     .filter(color => color !== undefined);
-  await fetch('/api/v1/palettes', {
+  fetch('/api/v1/palettes', {
     method: 'POST',
     body: JSON.stringify({
       palettes: colors,
