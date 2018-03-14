@@ -1,7 +1,11 @@
 const coloring = event => {
   console.log(document.activeElement.tagName);
-  
-  if (document.activeElement.tagName !== 'INPUT' && event.keyCode === 32 || event.keyCode === 13 || event.target.className === 'generate' ) {
+
+  if (
+    (document.activeElement.tagName !== 'INPUT' && event.keyCode === 32) ||
+    event.keyCode === 13 ||
+    event.target.className === 'generate'
+  ) {
     for (let i = 1; i < 6; i++) {
       if (
         $(`.color${i}`)
@@ -28,12 +32,27 @@ function getRandomColor() {
   );
 }
 
-const savePalette = (event) => {
-  const palette = $('.color')
-  const colors = Object.keys(palette).map(color => palette[color].textContent).filter(color=> color !== undefined);
-  console.log(colors);
-  //needs to post to backend
-}
+const savePalette = () => {
+  const palette = $('.color');
+  const name = $('.palette-name').val();
+  const colors = Object.keys(palette)
+    .map(color => palette[color].textContent)
+    .filter(color => color !== undefined);
+  $.ajax({
+    url: '/api/v1/palettes',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ palettes: colors, name })
+  });
+  savedPalette();
+};
+
+const savedPalette = () => {
+  console.log('SavedPalette clicked');
+
+  //get palettes from DB
+  //append them to the DOM
+};
 
 $(window).keypress(coloring);
 window.onload = () => {
@@ -52,4 +71,3 @@ $('.lock').click(event => {
 
 $('.generate').click(coloring);
 $('.save-palette').click(savePalette);
-
