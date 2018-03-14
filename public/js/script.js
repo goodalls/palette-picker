@@ -32,18 +32,28 @@ function getRandomColor() {
   );
 }
 
-const savePalette = () => {
+const savePalette = async() => {
   const palette = $('.color');
   const name = $('.palette-name').val();
   const colors = Object.keys(palette)
     .map(color => palette[color].textContent)
     .filter(color => color !== undefined);
-  $.ajax({
-    url: '/api/v1/palettes',
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({ palettes: colors, name })
+  await fetch('/api/v1/palettes', {
+    method: 'POST',
+    body: JSON.stringify({
+      palettes: colors,
+      name
+    }),
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
   });
+  // $.ajax({
+  //   url: '/api/v1/palettes',
+  //   type: 'POST',
+  //   contentType: 'application/json',
+  //   data: JSON.stringify({ palettes: colors, name })
+  // });
   savedPalette();
 };
 

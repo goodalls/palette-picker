@@ -26,9 +26,9 @@ app.get('/api/v1/palettes', (request, response) => {
 
 app.post('/api/v1/palettes', (request, response) => {
   const id = Date.now();
-  const { palettes } = request.body;
-  app.locals.palettes.unshift({ id, palettes });
-  response.status(201).json({ id, palettes });
+  const { palettes, name } = request.body;
+  app.locals.palettes.unshift({ id, palettes, name });
+  response.status(201).json({ id, palettes, name });
 });
 
 app.locals.palettes = [];
