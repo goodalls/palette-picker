@@ -28,6 +28,13 @@ function getRandomColor() {
   );
 }
 
+const savePalette = (event) => {
+  const palette = $('.color')
+  const colors = Object.keys(palette).map(color => palette[color].textContent).filter(color=> color !== undefined);
+  console.log(colors);
+  //needs to post to backend
+}
+
 $(window).keypress(coloring);
 window.onload = () => {
   for (let i = 1; i < 6; i++) {
@@ -44,3 +51,5 @@ $('.lock').click(event => {
 });
 
 $('.generate').click(coloring);
+$('.save-palette').click(savePalette);
+
