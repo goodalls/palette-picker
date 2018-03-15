@@ -9,5 +9,17 @@ module.exports = {
       directory: './db/seeds/dev'
     },
     useNullAsDefault: true
+  },
+
+  test: {
+    client: 'pg',
+    connection: 'postgres://localhost/palette-test',
+    migrations: {
+      directory: './test/db/migrations'
+    },
+    seeds: {
+      directory: './test/db/seeds/dev'
+    },
+    useNullAsDefault: true
   }
 };

@@ -39,7 +39,9 @@ app.post('/api/v1/palettes', (request, response) => {
     if (!request.body[requiredParameter]) {
       return response
         .status(422)
-        .send({ error: `Expected format: { palettes: <Array>, name: <String> }. You're missing a "${requiredParameter}" property.` });
+        .send({
+          error: `Expected format: { palettes: <Array>, name: <String> }. You're missing a "${requiredParameter}" property.`
+        });
     }
   }
 
@@ -60,7 +62,10 @@ app.post('/api/v1/palettes', (request, response) => {
 
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const { id } = request.params;
-  database('palettes').where('id', id).select().del()
+  database('palettes')
+    .where('id', id)
+    .select()
+    .del()
     .then(palette => {
       response.status(200).json(palette);
     })
@@ -74,6 +79,27 @@ app.get('/api/v1/projects', (request, response) => {
     .select()
     .then(projects => {
       response.status(200).json(projects);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
+app.post('/api/v1/projects', (request, response) => {
+  const { name } = request.body;
+  for (let requiredParameter of ['name']) {
+    if (!request.body[requiredParameter]) {
+      return response
+        .status(422)
+        .send({
+          error: `Expected format: { name: <String> }. You're missing a "${requiredParameter}" property.`
+        });
+    }
+  }
+  database('projects')
+    .insert({name}, 'id')
+    .then(projects => {
+      response.status(201).json(projects);
     })
     .catch(error => {
       response.status(500).json({ error });

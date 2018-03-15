@@ -1,9 +1,11 @@
 const coloring = event => {
+  
   if (
     (document.activeElement.tagName !== 'INPUT' && event.keyCode === 32) ||
     event.keyCode === 13 ||
     event.target.className === 'generate'
   ) {
+    event.preventDefault();
     for (let i = 1; i < 6; i++) {
       if (
         $(`.color${i}`)
@@ -52,11 +54,11 @@ const savePalette = () => {
   savedPalette();
 };
 
-const savedPalette =  async () => {
+const savedPalette = async () => {
   const initial = await fetch('/api/v1/palettes');
   const response = await initial.json();
-  response.forEach((palette)=> {
-    const {id, color1, color2, color3, color4, color5, name} = palette;
+  response.forEach(palette => {
+    const { id, color1, color2, color3, color4, color5, name } = palette;
     const card = `<div id=${id} class='card'>
     <div class='name'>${name}</div>
     <div class='color-palette' style='background-color:${color1}'></div>
@@ -75,7 +77,7 @@ function deletePalette(event) {
   if (event.target.className === 'delete') {
     console.log('delete button clicked');
     event.target.closest('.card').remove();
-   
+  
     //remove from database
     fetch(`/api/v1/palettes/${id}`, {
       method: 'DELETE',
@@ -87,38 +89,44 @@ function deletePalette(event) {
 }
 
 const newProject = () => {
-  //post new project
+  const name = $('.project-name').val();
+  fetch('/api/v1/projects', {
+    method: 'POST',
+    body: JSON.stringify({
+      name
+    }),
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  })
   projectsDropDown();
-}
+};
 
 const projectsDropDown = async () => {
   const initial = await fetch('/api/v1/projects');
   const response = await initial.json();
-  response.forEach((project)=> {
-    const {name, id} = project;
+  response.forEach(project => {
+    const { name, id } = project;
     $('.drop-down').append(`
       <option value='${id}'>${name}</option>
-      `)
-  })
-}
+      `);
+  });
+};
 
-$(window).keypress(coloring);
 window.onload = () => {
   savedPalette();
-  projectsDropDown()
+  projectsDropDown();
   for (let i = 1; i < 6; i++) {
     const color = getRandomColor();
     $(`.color${i}`).css('background-color', color);
     $(`.color${i}`)
-      .find('h4')
-      .text(color);
+    .find('h4')
+    .text(color);
   }
 };
+$(window).keypress(coloring);
 $('#saved-palettes').click(deletePalette);
-$('.lock').click(event => {
-  $(event.target).toggleClass('locked');
-});
-
+$('.lock').click(event => {$(event.target).toggleClass('locked');});
 $('.generate').click(coloring);
 $('.save-palette').click(savePalette);
-$('.new-project').click(newProject)
+$('.new-project').click(newProject);
