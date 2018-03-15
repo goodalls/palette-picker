@@ -52,11 +52,11 @@ const savePalette = () => {
   savedPalette();
 };
 
-const savedPalette = async () => {
+const savedPalette =  async () => {
   const initial = await fetch('/api/v1/palettes');
-  const response = await initial.json()
+  const response = await initial.json();
   response.forEach((palette)=> {
-    const {id, color1, color2, color3, color4, color5, name} = palette
+    const {id, color1, color2, color3, color4, color5, name} = palette;
     const card = `<div id=${id} class='card'>
     <div class='name'>${name}</div>
     <div class='color-palette' style='background-color:${color1}'></div>
@@ -65,19 +65,24 @@ const savedPalette = async () => {
     <div class='color-palette' style='background-color:${color4}'></div>
     <div class='color-palette' style='background-color:${color5}'></div>
     <button class='delete'>delete</button>
-    </div>`
-    $('#saved-palettes').append(card)
-  })
+    </div>`;
+    $('#saved-palettes').append(card);
+  });
 };
 
 function deletePalette(event) {
-  const id = event.target.closest('.card').id
-  console.log(id)
+  const id = event.target.closest('.card').id;
   if (event.target.className === 'delete') {
-    console.log('delete button clicked')
-
-    //remove from DOM
+    console.log('delete button clicked');
+    event.target.closest('.card').remove();
+   
     //remove from database
+    fetch(`/api/v1/palettes/${id}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 }
 
@@ -92,7 +97,7 @@ window.onload = () => {
       .text(color);
   }
 };
-$('#saved-palettes').click(deletePalette)
+$('#saved-palettes').click(deletePalette);
 $('.lock').click(event => {
   $(event.target).toggleClass('locked');
 });
