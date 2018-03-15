@@ -1,6 +1,4 @@
 const coloring = event => {
-  console.log(document.activeElement.tagName);
-
   if (
     (document.activeElement.tagName !== 'INPUT' && event.keyCode === 32) ||
     event.keyCode === 13 ||
@@ -36,6 +34,9 @@ function getRandomColor() {
 const savePalette = () => {
   const palette = $('.color');
   const name = $('.palette-name').val();
+  const project_id = $('.drop-down').val();
+  console.log(project);
+  
   const colors = Object.keys(palette)
     .map(color => palette[color].textContent)
     .filter(color => color !== undefined);
@@ -43,7 +44,8 @@ const savePalette = () => {
     method: 'POST',
     body: JSON.stringify({
       palettes: colors,
-      name
+      name,
+      project_id
     }),
     headers: new Headers({
       'Content-Type': 'application/json'
@@ -85,10 +87,25 @@ function deletePalette(event) {
     });
   }
 }
+newProject() {
+  //post new project
+  projectsDropDown();
+}
+projectsDropDown() {
+  const initial = await fetch('/api/v1/projects');
+  const response = await initial.json();
+  response.forEach((project)=> {
+    const {name, id} = project;
+    $('.drop-down').append(`
+      <option name='${id}'>${name}</option>
+      `)
+  })
+}
 
 $(window).keypress(coloring);
 window.onload = () => {
   savedPalette();
+  projectsDropDown()
   for (let i = 1; i < 6; i++) {
     const color = getRandomColor();
     $(`.color${i}`).css('background-color', color);
@@ -104,3 +121,4 @@ $('.lock').click(event => {
 
 $('.generate').click(coloring);
 $('.save-palette').click(savePalette);
+$('.new-project').click(newProject)

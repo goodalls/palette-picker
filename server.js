@@ -11,17 +11,16 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Palette Picker';
 
 app.use(express.static('public'));
-// app.get('/', (request, response) => response.send('Hello World!'));
 
-app.get('/api/v1/palettes/:id', (request, response) => {
-  const { id } = request.params;
-  const palette = app.locals.palettes.find(palette => palette.id === id);
-  if (palette) {
-    return response.status(200).json(palette);
-  } else {
-    return response.sendStatus(404);
-  }
-});
+// app.get('/api/v1/palettes/:id', (request, response) => {
+//   const { id } = request.params;
+//   const palette = app.locals.palettes.find(palette => palette.id === id);
+//   if (palette) {
+//     return response.status(200).json(palette);
+//   } else {
+//     return response.sendStatus(404);
+//   }
+// });
 
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes')
@@ -35,7 +34,7 @@ app.get('/api/v1/palettes', (request, response) => {
 });
 
 app.post('/api/v1/palettes', (request, response) => {
-  const { palettes, name } = request.body;
+  const { palettes, name, project_id } = request.body;
   for (let requiredParameter of ['palettes', 'name']) {
     if (!request.body[requiredParameter]) {
       return response
@@ -51,7 +50,8 @@ app.post('/api/v1/palettes', (request, response) => {
       color3: palettes[2],
       color4: palettes[3],
       color5: palettes[4],
-      name
+      name,
+      project_id
     })
     .catch(error => {
       response.status(500).json({ error });
