@@ -35,7 +35,7 @@ app.get('/api/v1/palettes', (request, response) => {
 
 app.post('/api/v1/palettes', (request, response) => {
   const { palettes, name, project_id } = request.body;
-  for (let requiredParameter of ['palettes', 'name']) {
+  for (let requiredParameter of ['palettes', 'name', 'project_id']) {
     if (!request.body[requiredParameter]) {
       return response
         .status(422)
@@ -63,6 +63,17 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', id).select().del()
     .then(palette => {
       response.status(200).json(palette);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
+app.get('/api/v1/projects', (request, response) => {
+  database('projects')
+    .select()
+    .then(projects => {
+      response.status(200).json(projects);
     })
     .catch(error => {
       response.status(500).json({ error });

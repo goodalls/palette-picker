@@ -34,9 +34,7 @@ function getRandomColor() {
 const savePalette = () => {
   const palette = $('.color');
   const name = $('.palette-name').val();
-  const project_id = $('.drop-down').val();
-  console.log(project);
-  
+  const project_id = $('.drop-down option:selected').val();
   const colors = Object.keys(palette)
     .map(color => palette[color].textContent)
     .filter(color => color !== undefined);
@@ -87,17 +85,19 @@ function deletePalette(event) {
     });
   }
 }
-newProject() {
+
+const newProject = () => {
   //post new project
   projectsDropDown();
 }
-projectsDropDown() {
+
+const projectsDropDown = async () => {
   const initial = await fetch('/api/v1/projects');
   const response = await initial.json();
   response.forEach((project)=> {
     const {name, id} = project;
     $('.drop-down').append(`
-      <option name='${id}'>${name}</option>
+      <option value='${id}'>${name}</option>
       `)
   })
 }
