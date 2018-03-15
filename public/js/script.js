@@ -1,4 +1,3 @@
-
 const coloring = event => {
   console.log(document.activeElement.tagName);
 
@@ -13,6 +12,7 @@ const coloring = event => {
           .find('span')
           .hasClass('locked')
       ) {
+        //do nothing
       } else {
         const color = getRandomColor();
         $(`.color${i}`).css('background-color', color);
@@ -49,24 +49,41 @@ const savePalette = () => {
       'Content-Type': 'application/json'
     })
   });
-  // $.ajax({
-  //   url: '/api/v1/palettes',
-  //   type: 'POST',
-  //   contentType: 'application/json',
-  //   data: JSON.stringify({ palettes: colors, name })
-  // });
   savedPalette();
 };
 
-const savedPalette = () => {
-  console.log('SavedPalette clicked');
-
-  //get palettes from DB
-  //append them to the DOM
+const savedPalette = async () => {
+  const initial = await fetch('/api/v1/palettes');
+  const response = await initial.json()
+  response.forEach((palette)=> {
+    const {id, color1, color2, color3, color4, color5, name} = palette
+    const card = `<div id=${id} class='card'>
+    <div class='name'>${name}</div>
+    <div class='color-palette' style='background-color:${color1}'></div>
+    <div class='color-palette' style='background-color:${color2}'></div>
+    <div class='color-palette' style='background-color:${color3}'></div>
+    <div class='color-palette' style='background-color:${color4}'></div>
+    <div class='color-palette' style='background-color:${color5}'></div>
+    <button class='delete'>delete</button>
+    </div>`
+    $('#saved-palettes').append(card)
+  })
 };
+
+function deletePalette(event) {
+  const id = event.target.closest('.card').id
+  console.log(id)
+  if (event.target.className === 'delete') {
+    console.log('delete button clicked')
+
+    //remove from DOM
+    //remove from database
+  }
+}
 
 $(window).keypress(coloring);
 window.onload = () => {
+  savedPalette();
   for (let i = 1; i < 6; i++) {
     const color = getRandomColor();
     $(`.color${i}`).css('background-color', color);
@@ -75,7 +92,7 @@ window.onload = () => {
       .text(color);
   }
 };
-
+$('#saved-palettes').click(deletePalette)
 $('.lock').click(event => {
   $(event.target).toggleClass('locked');
 });
