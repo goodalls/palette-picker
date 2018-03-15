@@ -58,6 +58,17 @@ app.post('/api/v1/palettes', (request, response) => {
     });
 });
 
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const { id } = request.params;
+  database('palettes').where('id', id).select().del()
+    .then(palette => {
+      response.status(200).json(palette);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
