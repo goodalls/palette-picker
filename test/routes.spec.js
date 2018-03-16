@@ -107,14 +107,14 @@ describe('API Routes', () => {
   });
 
   describe('DELETE /api/v1/palettes/:id', () => {
-    it.skip('should delete a palette', () => {
+    it('should delete a palette', () => {
       return chai
         .request(server)
         .delete('/api/v1/palettes/1')
-        .then((error, response) => {
+        .then((response) => {
           response.should.have.status(200);
           response.should.be.json;
-          response.body.should.be.a('object');
+          response.body.should.equal(1);
         });
     });
   });
