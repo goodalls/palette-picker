@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const environment = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV || 'test';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
@@ -11,6 +11,10 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Palette Picker';
 
 app.use(express.static('public'));
+
+app.use((request, respond) => {
+  respond.status(404).send('Sorry, that is not found.');
+});
 
 // app.get('/api/v1/palettes/:id', (request, response) => {
 //   const { id } = request.params;
@@ -37,11 +41,9 @@ app.post('/api/v1/palettes', (request, response) => {
   const { palettes, name, project_id } = request.body;
   for (let requiredParameter of ['palettes', 'name', 'project_id']) {
     if (!request.body[requiredParameter]) {
-      return response
-        .status(422)
-        .send({
-          error: `Expected format: { palettes: <Array>, name: <String> }. You're missing a "${requiredParameter}" property.`
-        });
+      return response.status(422).send({
+        error: `Expected format: { palettes: <Array>, name: <String> }. You're missing a "${requiredParameter}" property.`
+      });
     }
   }
 
@@ -89,15 +91,13 @@ app.post('/api/v1/projects', (request, response) => {
   const { name } = request.body;
   for (let requiredParameter of ['name']) {
     if (!request.body[requiredParameter]) {
-      return response
-        .status(422)
-        .send({
-          error: `Expected format: { name: <String> }. You're missing a "${requiredParameter}" property.`
-        });
+      return response.status(422).send({
+        error: `Expected format: { name: <String> }. You're missing a "${requiredParameter}" property.`
+      });
     }
   }
   database('projects')
-    .insert({name}, 'id')
+    .insert({ name }, 'id')
     .then(projects => {
       response.status(201).json(projects);
     })
@@ -109,3 +109,5 @@ app.post('/api/v1/projects', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
+
+module.exports = app;

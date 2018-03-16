@@ -5,14 +5,32 @@ const server = require('../server');
 
 chai.use(chaiHttp);
 
-describe('Client Routes', () => {
 
+describe('Client Routes', () => {
+  
+
+  it('should return 404', () => {
+    return chai
+      .request(server)
+      .get('/sad')
+      .then(response => {
+        response.should.have.status(404);
+      })
+      .catch(err => {
+        throw err;
+      });
+  });
 });
 
 describe('API Routes', () => {
+  beforeEach(() => {
+    // runs before each test in this block
+  });
 
+  it('should', () => {
+  
+  });
 });
-
 
 // const chai = require('chai');
 // const should = chai.should();
