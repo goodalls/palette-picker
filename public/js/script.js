@@ -74,7 +74,6 @@ const savedPalette = async () => {
 function deletePalette(event) {
   const id = event.target.closest('.card').id;
   if (event.target.className === 'delete') {
-    console.log('delete button clicked');
     event.target.closest('.card').remove();
   
     //remove from database
@@ -105,8 +104,8 @@ const appendProjects = async () => {
   const initial = await fetch('/api/v1/projects');
   const response = await initial.json();
   response.forEach(projects => {
-    const { name } = projects;
-    const card = `<div class='card'>
+    const { name , id } = projects;
+    const card = `<div id=${id} class='card'>
     <div class='name'>${name}</div>
     <button class='delete'>delete</button>
     </div>`;
@@ -125,6 +124,21 @@ const projectsDropDown = async () => {
   });
 };
 
+const deleteProjects = async (event) => {
+  const id = event.target.closest('.card').id;
+  if (event.target.className === 'delete') {
+    event.target.closest('.card').remove();
+  
+    //remove from database
+    fetch(`/api/v1/projects/${id}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+}
+
 window.onload = () => {
   savedPalette();
   projectsDropDown();
@@ -139,6 +153,7 @@ window.onload = () => {
 };
 $(window).keypress(coloring);
 $('#saved-palettes').click(deletePalette);
+$('#saved-projects').click(deleteProjects);
 $('.lock').click(event => {$(event.target).toggleClass('locked');});
 $('.generate').click(coloring);
 $('.save-palette').click(savePalette);
