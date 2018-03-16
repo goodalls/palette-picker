@@ -50,7 +50,7 @@ const savePalette = () => {
       'Content-Type': 'application/json'
     })
   });
-  savedPalette();
+  window.location.reload()
 };
 
 const savedPalette = async () => {
@@ -98,8 +98,21 @@ const newProject = () => {
       'Content-Type': 'application/json'
     })
   })
-  projectsDropDown();
+  window.location.reload()
 };
+
+const appendProjects = async () => {
+  const initial = await fetch('/api/v1/projects');
+  const response = await initial.json();
+  response.forEach(projects => {
+    const { name } = projects;
+    const card = `<div class='card'>
+    <div class='name'>${name}</div>
+    <button class='delete'>delete</button>
+    </div>`;
+    $('#saved-projects').append(card);
+  });
+}
 
 const projectsDropDown = async () => {
   const initial = await fetch('/api/v1/projects');
@@ -115,6 +128,7 @@ const projectsDropDown = async () => {
 window.onload = () => {
   savedPalette();
   projectsDropDown();
+  appendProjects();
   for (let i = 1; i < 6; i++) {
     const color = getRandomColor();
     $(`.color${i}`).css('background-color', color);
