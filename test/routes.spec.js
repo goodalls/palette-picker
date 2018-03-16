@@ -138,7 +138,7 @@ describe('API Routes', () => {
   });
 
   describe('POST /api/v1/projects', () => {
-    it.skip('should create new project', () => {
+    it('should create new project', () => {
       const name = 'jeffster';
       return chai
         .request(server)
@@ -149,8 +149,8 @@ describe('API Routes', () => {
         .then(response => {
           response.should.have.status(201);
           response.should.be.json;
-          response.body.should.be.a('object');
-          response.body.should.have.property('id');
+          response.body.should.be.a('array');
+          response.body[0].should.equal(2);
         })
         .catch(err => {
           throw err;
