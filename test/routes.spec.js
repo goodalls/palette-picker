@@ -175,4 +175,17 @@ describe('API Routes', () => {
         });
     });
   });
+
+  describe('DELETE /api/v1/projects/:id', () => {
+    it('should delete a project from the database', () => {
+      return chai
+        .request(server)
+        .delete('/api/v1/projects/2')
+        .then((response) => {
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.equal(1);
+        });
+    });
+  });
 });
