@@ -37,15 +37,18 @@ app.post('/api/v1/palettes', (request, response) => {
     }
   }
   database('palettes')
-    .insert({
-      color1: palettes[0],
-      color2: palettes[1],
-      color3: palettes[2],
-      color4: palettes[3],
-      color5: palettes[4],
-      name,
-      project_id
-    }, 'id')
+    .insert(
+      {
+        color1: palettes[0],
+        color2: palettes[1],
+        color3: palettes[2],
+        color4: palettes[3],
+        color5: palettes[4],
+        name,
+        project_id
+      },
+      'id'
+    )
     .then(palette => {
       response.status(201).json(palette);
     })
@@ -106,6 +109,19 @@ app.delete('/api/v1/projects/:id', (request, response) => {
     .del()
     .then(project => {
       response.status(200).json(project);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
+app.get('/api/v1/projects/:id/palettes', (request, response) => {
+  const { id } = request.params;
+  database('palettes')
+    .where('project_id', id)
+    .select()
+    .then(projects => {
+      response.status(200).json(projects);
     })
     .catch(error => {
       response.status(500).json({ error });

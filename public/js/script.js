@@ -107,7 +107,7 @@ const appendProjects = async () => {
   
   
 
-  response.forEach(projects => {
+  response.forEach( async projects => {
     const { name , id } = projects;
     const paletteInitial = await fetch(`/api/v1/projects/${id}/palettes`);
     const paletteResponse = await paletteInitial.json();
