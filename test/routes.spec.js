@@ -175,4 +175,43 @@ describe('API Routes', () => {
         });
     });
   });
+
+  describe('DELETE /api/v1/projects/:id', () => {
+    it('should delete a project from the database', () => {
+      return chai
+        .request(server)
+        .delete('/api/v1/projects/2')
+        .then((response) => {
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.equal(1);
+        });
+    });
+  });
+
+  describe('GET /api/v1/projects/:id/palettes', () => {
+    it('should return all palettes for a specific project', () => {
+      return chai
+        .request(server)
+        .get('/api/v1/projects/1/palettes')
+        .then(response => {
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('array');
+          response.body[0].should.have.property('id');
+          response.body[0].should.have.property('color1');
+          response.body[0].should.have.property('color2');
+          response.body[0].should.have.property('color3');
+          response.body[0].should.have.property('color4');
+          response.body[0].should.have.property('color5');
+          response.body[0].should.have.property('name');
+          response.body[0].should.have.property('project_id');
+          response.body[0].project_id.should.equal(1);
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  });
+  
 });

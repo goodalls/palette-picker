@@ -103,10 +103,31 @@ const newProject = () => {
 const appendProjects = async () => {
   const initial = await fetch('/api/v1/projects');
   const response = await initial.json();
-  response.forEach(projects => {
+
+  
+  
+
+  response.forEach( async projects => {
     const { name , id } = projects;
+    const paletteInitial = await fetch(`/api/v1/projects/${id}/palettes`);
+    const paletteResponse = await paletteInitial.json();
+
+    const paletteCards = paletteResponse.map(palette => {
+      const { id, color1, color2, color3, color4, color5, name } = palette;
+    return `<div id=${id} class='card'>
+    <div class='name'>${name}</div>
+    <div class='color-palette' style='background-color:${color1}'></div>
+    <div class='color-palette' style='background-color:${color2}'></div>
+    <div class='color-palette' style='background-color:${color3}'></div>
+    <div class='color-palette' style='background-color:${color4}'></div>
+    <div class='color-palette' style='background-color:${color5}'></div>
+    <button class='delete'>delete</button>
+    </div>`;
+    });
+
     const card = `<div id=${id} class='card'>
     <div class='name'>${name}</div>
+    ${paletteCards}
     <button class='delete'>delete</button>
     </div>`;
     $('#saved-projects').append(card);
