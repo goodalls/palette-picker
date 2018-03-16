@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const environment = process.env.NODE_ENV || 'test';
+const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
@@ -36,8 +36,7 @@ app.post('/api/v1/palettes', (request, response) => {
       });
     }
   }
-
-  database('palettes', 'id')
+  database('palettes')
     .insert({
       color1: palettes[0],
       color2: palettes[1],
@@ -46,7 +45,7 @@ app.post('/api/v1/palettes', (request, response) => {
       color5: palettes[4],
       name,
       project_id
-    })
+    }, 'id')
     .then(palette => {
       response.status(201).json(palette);
     })

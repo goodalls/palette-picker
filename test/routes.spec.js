@@ -2,15 +2,17 @@ const chai = require('chai');
 const should = chai.should();
 const chaiHttp = require('chai-http');
 const server = require('../server');
-const knex = require('knex');
+const environment = process.env.NODE_ENV || 'test';
+const configuration = require('../knexfile')[environment];
+const database = require('knex')(configuration);
 
 chai.use(chaiHttp);
 
 describe('Client Routes', () => {
   beforeEach(done => {
-    knex.migrate.rollback().then(() => {
-      knex.migrate.latest().then(() => {
-        knex.seed.run().then(() => {
+    database.migrate.rollback().then(() => {
+      database.migrate.latest().then(() => {
+        database.seed.run().then(() => {
           done();
         });
       });
@@ -56,9 +58,9 @@ describe('API Routes', () => {
   });
 
   describe('POST /api/v1/palettes', () => {
-    it.skip('should create new palette', () => {
+    it('should create new palette', () => {
       const colors = ['red', 'green', 'blue', 'purple', 'violet'];
-      const project_id = '2';
+      const project_id = '1';
       const name = 'jeffster';
       return chai
         .request(server)
@@ -71,9 +73,9 @@ describe('API Routes', () => {
         .then(response => {
           response.should.have.status(201);
           response.should.be.json;
-          response.body.should.be.a('object');
-          response.body.should.have.property('lastname');
-          response.body.lastname.should.equal('Knuth');
+          response.body.should.be.a('array');
+          
+          response.body[0].should.equal(2);
         })
         .catch(err => {
           throw err;
@@ -136,7 +138,7 @@ describe('API Routes', () => {
   });
 
   describe('POST /api/v1/projects', () => {
-    it.skip('should create new palette', () => {
+    it.skip('should create new project', () => {
       const name = 'jeffster';
       return chai
         .request(server)
