@@ -1,5 +1,4 @@
 const coloring = event => {
-  
   if (
     (document.activeElement.tagName !== 'INPUT' && event.keyCode === 32) ||
     event.keyCode === 13 ||

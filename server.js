@@ -12,18 +12,8 @@ app.locals.title = 'Palette Picker';
 
 app.use(express.static('public'));
 
-app.use((request, respond) => {
-  respond.status(404).send('Sorry, that is not found.');
-});
-
-// app.get('/api/v1/palettes/:id', (request, response) => {
-//   const { id } = request.params;
-//   const palette = app.locals.palettes.find(palette => palette.id === id);
-//   if (palette) {
-//     return response.status(200).json(palette);
-//   } else {
-//     return response.sendStatus(404);
-//   }
+// app.use((request, respond) => {
+//   respond.status(404).send('Sorry, that is not found.');
 // });
 
 app.get('/api/v1/palettes', (request, response) => {
@@ -47,7 +37,7 @@ app.post('/api/v1/palettes', (request, response) => {
     }
   }
 
-  database('palettes')
+  database('palettes', 'id')
     .insert({
       color1: palettes[0],
       color2: palettes[1],
@@ -56,6 +46,9 @@ app.post('/api/v1/palettes', (request, response) => {
       color5: palettes[4],
       name,
       project_id
+    })
+    .then(palette => {
+      response.status(201).json(palette);
     })
     .catch(error => {
       response.status(500).json({ error });
