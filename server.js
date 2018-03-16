@@ -98,6 +98,20 @@ app.post('/api/v1/projects', (request, response) => {
     });
 });
 
+app.delete('/api/v1/projects/:id', (request, response) => {
+  const { id } = request.params;
+  database('projects')
+    .where('id', id)
+    .select()
+    .del()
+    .then(project => {
+      response.status(200).json(project);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
