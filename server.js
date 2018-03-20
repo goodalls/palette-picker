@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+
+const https = require('https');
+const http = require('http');
 //
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -18,8 +21,12 @@ app.use(express.static('public'));
 //   respond.status(404).send('Sorry, that is not found.');
 // });
 
-app.get('*', (request, response)=> {
+http.createServer(app).listen(80);
+https.createServer(sslOptions, app).listen(443);
+
+http.get('*', (request, response, next)=> {
   response.redirect('https://' + request.headers.host + request.url);
+  return next();
 });
 
 app.get('/api/v1/palettes', (request, response) => {
