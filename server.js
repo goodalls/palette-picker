@@ -2,9 +2,11 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
+
 const https = require('https');
 const http = require('http');
-//
+
+
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
@@ -21,13 +23,14 @@ app.use(express.static('public'));
 //   respond.status(404).send('Sorry, that is not found.');
 // });
 
-http.createServer(app).listen(80);
-https.createServer(sslOptions, app).listen(443);
+const requireHTTPS = (request, response, next)=> {
+  if (request.headers['x-forwarded-proto'] !== 'https') {
+    return response.redirect('https://' + request.get('host') + request.url);
+  }
+  next();
+};
 
-http.get('*', (request, response, next)=> {
-  response.redirect('https://' + request.headers.host + request.url);
-  return next();
-});
+if (process.env.NODE_ENV === 'production') { app.use(requireHTTPS); }
 
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes')
