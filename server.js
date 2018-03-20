@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Palette Picker';
 
-app.use(express.static('public'));
 
 // for some reason this code was breaking my tests. but the docs made it seem like I did it correctly.
 
@@ -26,7 +25,8 @@ const requireHTTPS = (request, response, next)=> {
 };
 
 if (process.env.NODE_ENV === 'production') { app.use(requireHTTPS); }
-
+app.use(express.static('public'));
+  
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes')
     .select()
