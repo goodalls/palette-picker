@@ -4,8 +4,6 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
-  - knex migrate:latest --env=test
-  - knex seed:run --env=test
+  - psql -c 'CREATE DATABASE palettetest;' -U postgres
 notifications:
     email: false
