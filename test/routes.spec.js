@@ -12,7 +12,7 @@ describe('Client Routes', () => {
   beforeEach(done => {
     database.migrate.rollback().then(() => {
       database.migrate.latest().then(() => {
-        database.seed.run().then(() => {
+        return database.seed.run().then(() => {
           done();
         });
       });

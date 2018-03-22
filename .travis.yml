@@ -5,9 +5,5 @@ services:
   - postgresql
 before_script:
   - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
-test:
-  adapter: postgresql
-  database: travis_ci_test
-deploy:
-  provider: postgresql
-  migrate: "knex migrate:latest"
+  - knex migrate:latest --env=test
+  - knex seed:run --env=test
