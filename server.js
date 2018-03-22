@@ -10,23 +10,24 @@ app.use(bodyParser.json());
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Palette Picker';
 
-
 // for some reason this code was breaking my tests. but the docs made it seem like I did it correctly.
 
 // app.use((request, respond) => {
 //   respond.status(404).send('Sorry, that is not found.');
 // });
 
-const requireHTTPS = (request, response, next)=> {
+const requireHTTPS = (request, response, next) => {
   if (request.headers['x-forwarded-proto'] !== 'https') {
     return response.redirect('https://' + request.get('host') + request.url);
   }
   next();
 };
 
-if (process.env.NODE_ENV === 'production') { app.use(requireHTTPS); }
+if (process.env.NODE_ENV === 'production') {
+  app.use(requireHTTPS);
+}
 app.use(express.static('public'));
-  
+
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes')
     .select()
