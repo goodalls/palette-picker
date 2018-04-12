@@ -26,10 +26,10 @@ Once the server is running, you can visit:
 
 - There is a website out there called Coolors - and others like it are out there. They help you generate color palettes for websites or other design projects.
 
-Your job is to recreate some of this site’s functionality with your own backend and database. A user should be able to come to your site, generate a color palette, and save it for their own future projects.
+- Your job is to recreate some of this site’s functionality with your own backend and database. A user should be able to come to your site, generate a color palette, and save it for their own future projects.
 
 
-[Palette Picker](http://frontend.turing.io/projects/palette-picker.html)
+[link to Palette Picker project spec](http://frontend.turing.io/projects/palette-picker.html)
 
 ## Tech Stack
 
